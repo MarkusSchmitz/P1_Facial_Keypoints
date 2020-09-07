@@ -51,14 +51,14 @@ class Net(nn.Module):
         # Output = (512, 10, 10)
         # Maxpooled Output = (512, 5, 5)
         
-        self.fc6 = nn.Linear(12800, 2560)
+        self.fc6 = nn.Linear(12800, 1024)
         self.drop6 = nn.Dropout(p=0.4)
         #self.fc1_bn = nn.BatchNorm1d(2560)
         
-        self.fc7 = nn.Linear(2560, 1280)
+        self.fc7 = nn.Linear(1024, 1024)
         self.drop7 = nn.Dropout(p=0.4)
 
-        self.fc8 = nn.Linear(1280, 136)
+        self.fc8 = nn.Linear(1024, 136)
         
         ## Note that among the layers to add, consider including:
         # maxpooling layers, multiple conv layers, fully-connected layers, and other layers (such as dropout or batch normalization) to avoid overfitting
@@ -70,9 +70,9 @@ class Net(nn.Module):
         ## x is the input image and, as an example, here you may choose to include a pool/conv step:
         
         # Conv Layers
-        x = self.drop1(self.pool1(F.relu(self.conv1(x))))
+        x = self.pool1(F.relu(self.conv1(x)))
         x = self.pool2(F.relu(self.conv2(x)))
-        x = self.drop3(self.pool3(F.relu(self.conv3(x))))
+        x = self.pool3(F.relu(self.conv3(x)))
         x = self.pool4(F.relu(self.conv4(x)))
         x = self.pool5(F.relu(self.conv5(x)))
         
